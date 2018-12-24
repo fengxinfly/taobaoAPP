@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0,minimum-scale=1.0">
+	<title>使用flex布局重构app_注册页面</title>
+	<link rel="stylesheet" href="css/public.css">
+	<link rel="stylesheet" href="css/less.css">
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<section class="artwrap">
+	<header class="reghead">
+		<h1>淘宝注册</h1>
+		<i class="icon icon1 icon_goback"></i>
+	</header>
+	<div class="formsubmit">
+		<div class="finput">
+			<input type="number" name="user_phone_num" id="user_phone_num" pattern="[0-9]" min="10000000000"
+				   max="18999999999" maxlength="11" placeholder="请输入手机号"/>
+			<!--<input class="user_phone_num" type="text" placeholder="请输入手机号">-->
+			<i class="icon icon_clear"></i>
+		</div>
+		<!--<span class="checkphone warning"></span>-->
+		<div class="finput">
+			<input class="fpwd" type="password" placeholder="请输入6-20位的密码">
+			<i class="icon icon_clear icon_right"></i>
+			<i class="closepwd"><img src="img/closeeye.jpg"></i>
+		</div>
+		<!--<span class="checkpwd warning"></span>-->
+		<div class="finput">
+			<input class="fpwd2" type="password" placeholder="请再次输入密码">
+			<i class="icon icon_clear icon_right"></i>
+			<i class="closepwd2"><img src="img/closeeye.jpg"></i>
+		</div>
+		<!--<span class="checkrepwd2 warning"></span>-->
+		<div class="finput">
+			<input class="fyzm" type="text" placeholder="请输入验证码">
+			<i class="icon icon_clear icon_yzm"></i>
+			<!--<img class="imgCode" src="/cgi-bin/m/authcode?mod=login" alt="">-->
+			<span class="yzmcode">5688</span>
+		</div>
+		<span class="warning"></span>
+		<div class="finput finput_btn">
+			<input type="button"value="注册">
+		</div>
+	</div>
+</section>
+</body>
+<script>
+//	及时搜索，显示尾部的叉号
+	$(".finput input").bind("input propertychange",function(){
+		if($(this).val()){
+			$(this).next().show();
+		}else{
+			$(this).next().hide();
+		}
+	});
+	//	input框中点击尾部叉号清空输入框
+	$(".icon_clear").bind("click",function(){
+		$(this).prev('input').val('');
+		$(this).hide();
+	});
+//	针对密码框，隐藏和显示密码的方法
+	var flag=true;
+	$('.closepwd,.closepwd2').bind('click',function(){
+		if(flag){
+			$(this).children().attr('src','img/openeye.jpg');
+			$(this).parents().children('input').attr('type','text');
+			flag=false;
+		}else{
+			$(this).children().attr('src','img/closeeye.jpg');
+			$(this).parents().children('input').attr('type','password');
+			flag=true;
+		}
+	});
+//	随机生成四位验证码
+	$('.yzmcode').bind('click',function(){
+		var code = Math.floor(Math.random()*9000)+1000;
+//		alert(code);
+		$(this).html(code);
+	});
+
+/**
+ * 校验手机号
+ * @param num
+ * @returns {boolean}
+ */
+function validUserPhoneNum(num){
+	if(!num){
+		$('.warning').text('请输入手机号');
+		return false;
+	}
+	var phone = /^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8}$/;
+	if(!phone.test(num)){
+		$('#user_phone_num').val('');
+		$('.warning').text('请输入正确的手机号');
+		return false;
+	}
+	return true;
+}
+
+/**
+ * 校验密码
+ * @param num
+ * @returns {boolean}
+ */
+function validUserPwdNum(num){
+	var pwd = /^[a-zA-Z0-9]{6,20}$/;
+	if(!num||!pwd.test(num)){
+		$('.fpwd').val('');
+		$('.warning').text('请输入6-20位的密码');
+		return false;
+	}
+	return true;
+}
+
+/**
+ * 验证码校验
+ * @param code
+ * @returns {boolean}
+ */
+function validVerifyCode(code){
+	if(!code){
+		$('.warning').text('请输入验证码');
+		return false;
+	}
+	var exp = /^\d{4}$/;
+	var fyzm=$('.fyzm').val();//获取验证码输入框中的值
+	var yzmcode=$('.yzmcode').html();//获取随机生成的数值
+	if(!exp.test(code)||!(fyzm==yzmcode)){//如果输入的不是4位数字，或者输入的4位数字与随机生成的4位数不相同，则提示错误。
+		$('.warning').text('请输入正确的验证码');
+		$('.fyzm').val('');
+		return false;
+	}
+	return true;
+}
+//清空提示的内容
+function clear(){
+	$('.warning').text('');
+}
+function changeword(){
+	$('.finput_btn').children().css('color','#fff');//点击注册时，“注册”两个字
+}
+	//	表单验证
+	$('.finput_btn').bind('click',function(){
+		var phonenum=$('#user_phone_num').val();
+		var fpwd=$('.fpwd').val();
+		var fpwd2=$('.fpwd2').val();
+		var fyzm=$('.fyzm').val();
+		if(!phonenum){
+			$('.warning').text('请输入手机号');
+		}else if(validUserPhoneNum(phonenum)){
+			if(!fpwd){
+				$('.warning').text('请输入6-20位的密码');
+			}else if(fpwd != fpwd2){
+				$('.warning').text('密码不一致，请重新输入');
+				return false;
+			}else if(validUserPwdNum(fpwd)){
+				if(!fyzm){
+					$('.warning').text('请输入验证码');
+				}else if(validVerifyCode(fyzm)){
+					$('.icon').hide();//
+					$('.fyzm').bind('input propertychange',changeword);
+				}
+			}
+		}
+	});
+
+	$('.fpwd').bind("focus", clear);
+	$('.fpwd2').bind("focus", clear);
+	$('.fyzm').bind("focus", clear);
+</script>
+</html>

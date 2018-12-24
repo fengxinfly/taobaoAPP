@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0,minimum-scale=1.0">
+	<title>使用flex布局重构app</title>
+	<link rel="stylesheet" href="css/public.css">
+	<link rel="stylesheet" href="css/less.css">
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+	<script rel="stylesheet" src="js/TouchSlide.1.1.js"></script>
+</head>
+<body>
+<section class="warp">
+	<div class="container">
+		<div class="column">
+			<!--头部-->
+			<div class="item span1">
+				<input class="finpt" type="text" placeholder="寻找宝贝店铺">
+			</div>
+			<!--中间部分-->
+			<div class="item span2">
+				<!--自适应轮播图-->
+				<div id="slideBox" class="slideBox">
+					<div class="bd">
+						<ul>
+							<li>
+								<a class="pic" href="#"><img src="img/1.jpg" /></a>
+								<a class="tit" href="#">墨西哥教师罢工 与警察激烈冲突</a>
+							</li>
+							<li>
+								<a class="pic" href="#"><img src="img/2.jpg"/></a>
+								<a class="tit" href="#">日右翼游行纪念钓岛"国有化"周年</a>
+							</li>
+							<li>
+								<a class="pic" href="#"><img src="img/3.jpg"/></a>
+								<a class="tit" href="#">女兵竞选美国小姐鼓励女性自强</a>
+							</li>
+							<li>
+								<a class="pic" href="#"><img src="img/4.jpg"/></a>
+								<a class="tit" href="#">济南现“最窄人行道” 仅0.2米宽</a>
+							</li>
+						</ul>
+					</div>
+					<div class="hd">
+						<ul></ul>
+					</div>
+				</div>
+				<!--图标导航-->
+				<div class="navlist">
+					<dl class="fnav">
+						<dt><img src="img/nav.png"></dt>
+						<dd>天猫</dd>
+					</dl>
+					<dl class="fnav">
+						<dt><img src="img/nav.png"></dt>
+						<dd>聚划算</dd>
+					</dl>
+					<dl class="fnav">
+						<dt><img src="img/nav.png"></dt>
+						<dd>到家</dd>
+					</dl>
+					<dl class="fnav">
+						<dt><img src="img/nav.png"></dt>
+						<dd>外卖</dd>
+					</dl>
+					<dl class="fnav">
+						<dt><img src="img/nav.png"></dt>
+						<dd>充值</dd>
+					</dl>
+					<dl class="fnav">
+						<dt><img src="img/nav.png"></dt>
+						<dd>阿里旅行</dd>
+					</dl>
+					<dl class="fnav">
+						<dt><img src="img/nav.png"></dt>
+						<dd>领金币</dd>
+					</dl>
+					<dl class="fnav">
+						<dt><img src="img/nav.png"></dt>
+						<dd>分类</dd>
+					</dl>
+				</div>
+			</div>
+			<!--淘宝头条部分-->
+			<div class="fmain2">
+				<div class="fleft fmain2_step">
+					<h2>淘宝头条</h2>
+				</div>
+				<div class="fright fmain2_step">
+					<h4>美搭</h4>
+					<h3>夏末的最后一波小清新美</h3>
+				</div>
+			</div>
+		<!--淘抢购部分-->
+			<div class="fmain3">
+				<div class="fmain3_left fmain3_com">
+
+				</div>
+				<div class="fmain3_right fmain3_com">
+					<div class="fmain3_colum">
+						<span class="fmain3_span1"></span>
+						<span class="fmain3_span1"></span>
+					</div>
+					<div class="fmain3_colum">
+						<span class="fmain3_span1"></span>
+						<span class="fmain3_span1"></span>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="item span3">
+				<dl class="fblank">
+					<dt><img src="img/tag1.jpg"></dt>
+					<dd>首页</dd>
+				</dl>
+				<dl class="fblank">
+					<dt><img src="img/tag2.jpg"></dt>
+					<dd>物流</dd>
+				</dl>
+				<dl class="fblank">
+					<dt><img src="img/tag3.jpg"></dt>
+					<dd>购物车</dd>
+				</dl>
+				<dl class="fblank">
+					<dt><img src="img/tag4.jpg"></dt>
+					<dd>我的淘宝</dd>
+				</dl>
+				<dl class="fblank">
+					<dt><img src="img/tag5.jpg"></dt>
+					<dd>更多</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</section>
+</body>
+
+<script type="text/javascript">
+	TouchSlide({
+		slideCell:"#slideBox",
+		titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+		mainCell:".bd ul",
+		effect:"leftLoop",
+		autoPage:true,//自动分页
+		autoPlay:true //自动播放
+	});
+</script>
+</html>
